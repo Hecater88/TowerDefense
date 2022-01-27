@@ -1,13 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Archer : MonoBehaviour
 {
-    public Transform target;
+    [Header("Atributes Archer")]
+
+    public float fireRate = 1f;
+    private float fireCountDown = 0f;
     public float range = 15f;
-    public string enemyTag = "Enemy";
     public float turnSpeed = 10f;
+
+    [Header("Unity Setup")]
+    public string enemyTag = "Enemy";
+    public Transform firePoint;
+    public GameObject arrowPrefab;
+
+    private Transform target;
 
     // Start is called before the first frame update
     void Start()
@@ -52,8 +59,23 @@ public class Archer : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(dir);
         Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
         transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
+        if (fireCountDown <= 0f)
+        {
+            Shoot();
+            fireCountDown = 1f / fireRate;
+        }
+        fireCountDown -= Time.deltaTime;
     }
 
+    void Shoot()
+    {
+        GameObject arrowGO = (GameObject)Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
+        Arrow arrow = arrowGO.GetComponent<Arrow>();
+
+        if(arrow != null)
+        arrow.ChaseEnemy(target);
+    }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

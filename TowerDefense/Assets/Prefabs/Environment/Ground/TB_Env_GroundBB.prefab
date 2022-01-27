@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33783292216975072}
   - component: {fileID: 23178389572471990}
   - component: {fileID: 7975833663999168600}
+  - component: {fileID: 1868386172572927658}
   m_Layer: 0
   m_Name: TB_Env_GroundBB
   m_TagString: Untagged
@@ -95,5 +96,18 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10, y: 0.39397925, z: 10}
-  m_Center: {x: -0.0000076293945, y: 0.19698963, z: 0}
+  m_Size: {x: 10, y: 0.4, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1868386172572927658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240222732930312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6978cf9f1263a4f91147692ac3260c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverColor: {r: 0.9245283, g: 0.13519046, b: 0.13519046, a: 0.70980394}
