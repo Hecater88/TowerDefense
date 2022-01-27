@@ -4,7 +4,9 @@ using UnityEngine.EventSystems;
 public class Node : MonoBehaviour
 {
     public Color hoverColor;
-    private GameObject turret;
+
+    [Header("Optional")]
+    public GameObject turret;
     private Renderer rend;
     private Color startColor;
 
@@ -20,7 +22,8 @@ public class Node : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-        if (buildManager.GetTurretToBuild() == null)
+
+        if (!buildManager.CanBuild)
             return;
 
         if (turret != null)
@@ -29,16 +32,16 @@ public class Node : MonoBehaviour
             return;
         }
 
-        GameObject turretToBuild = buildManager.GetTurretToBuild();
-        turret = (GameObject)Instantiate(turretToBuild, transform.position, transform.rotation);
+        buildManager.BuildTurretOn(this);
     }
     void OnMouseEnter()
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        if (buildManager.GetTurretToBuild() == null)
+        if (!buildManager.CanBuild)
             return;
+
         rend.material.color = hoverColor;
     }
 

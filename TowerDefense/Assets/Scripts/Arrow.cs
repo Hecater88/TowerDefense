@@ -4,6 +4,7 @@ public class Arrow : MonoBehaviour
 {
     private Transform target;
     public float speedArrow = 60f;
+    public float explosionRadius = 8f;
     public void ChaseEnemy(Transform _target)
     {
         target = _target;
@@ -32,7 +33,40 @@ public class Arrow : MonoBehaviour
     void HitTarget()
     {
         Debug.Log("HIT " + target.name);
-        Destroy(gameObject);
-        Destroy(target.gameObject);
+
+
+        if (explosionRadius <= 0f)
+        {
+            Explode();
+        }
+        else
+        {
+            Damage(target);
+
+        }
+    }
+
+    void Explode()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.tag == "Enemy")
+            {
+                OnDrawGizmosSelected();
+                Damage(collider.transform);
+            }
+
+        }
+    }
+    void Damage(Transform enemey)
+    {
+        Destroy(enemey.gameObject);
+
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }
